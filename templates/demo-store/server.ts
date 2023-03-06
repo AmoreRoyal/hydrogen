@@ -31,7 +31,7 @@ export default {
       /**
        * Create Hydrogen's Storefront client.
        */
-      const {storefront} = createStorefrontClient({
+      const {storefront, withCache} = createStorefrontClient({
         cache,
         waitUntil,
         buyerIp: getBuyerIp(request),
@@ -51,7 +51,13 @@ export default {
       const handleRequest = createRequestHandler({
         build: remixBuild,
         mode: process.env.NODE_ENV,
-        getLoadContext: () => ({cache, session, waitUntil, storefront, env}),
+        getLoadContext: () => ({
+          session,
+          waitUntil,
+          storefront,
+          withCache,
+          env,
+        }),
       });
 
       const response = await handleRequest(request);
